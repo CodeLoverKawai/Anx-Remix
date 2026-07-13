@@ -51,7 +51,7 @@ void main() async {
   }
 
   final pubspecContent = pubspecFile.readAsStringSync();
-  final versionRegExp = RegExp(r'version:\s*(\d+\.\d+\.\d+)(\+(\d+))?');
+  final versionRegExp = RegExp(r'version:\s*([^\s\n\r]+)');
   final match = versionRegExp.firstMatch(pubspecContent);
 
   if (match == null) {
@@ -59,8 +59,20 @@ void main() async {
     exit(1);
   }
 
-  final currentVersion = match.group(1);
-  final currentBuild = match.group(3) != null ? int.parse(match.group(3)!) : 0;
+  final versionValue = match.group(1)!;
+  final plusIndex = versionValue.indexOf('+');
+  String currentVersion;
+  int currentBuild;
+
+  if (plusIndex != -1) {
+    currentVersion = versionValue.substring(0, plusIndex);
+    final buildStr = versionValue.substring(plusIndex + 1);
+    final buildDigitsMatch = RegExp(r'^\d+').firstMatch(buildStr);
+    currentBuild = buildDigitsMatch != null ? int.parse(buildDigitsMatch.group(0)!) : 0;
+  } else {
+    currentVersion = versionValue;
+    currentBuild = 0;
+  }
 
   print('\nCurrent version in pubspec.yaml: $currentVersion+$currentBuild');
 
