@@ -16,16 +16,16 @@ mkdir -p "$APPDIR"
 cp -r "$RELEASE_BUNDLE"/* "$APPDIR/"
 
 # Copy Icon
-cp "$REPO_DIR/assets/icon/Anx-logo.png" "$APPDIR/anx_reader.png"
+cp "$REPO_DIR/assets/icon/Anx-logo.png" "$APPDIR/anx_remix.png"
 cp "$REPO_DIR/assets/icon/Anx-logo.png" "$APPDIR/.DirIcon"
 
 # Create .desktop file
-cat << 'EOF' > "$APPDIR/anx_reader.desktop"
+cat << 'EOF' > "$APPDIR/anx_remix.desktop"
 [Desktop Entry]
 Name=Anx Remix
 Comment=A clean, modern e-book reader.
-Exec=anx_reader %U
-Icon=anx_reader
+Exec=anx_remix %U
+Icon=anx_remix
 Type=Application
 Terminal=false
 Categories=Office;Viewer;
@@ -58,7 +58,7 @@ if [ -z "$WEBKIT_DISABLE_DMABUF_RENDERER" ]; then
   export WEBKIT_DISABLE_DMABUF_RENDERER=1
 fi
 
-exec "$SELF/anx_reader" "$@"
+exec "$SELF/anx_remix" "$@"
 EOF
 chmod +x "$APPDIR/AppRun"
 

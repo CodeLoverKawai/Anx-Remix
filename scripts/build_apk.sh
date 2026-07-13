@@ -15,23 +15,24 @@ echo "=== Detected version: $VERSION ==="
 # Clean old APKs in root directory
 rm -f "$REPO_DIR"/Anx_Remix-*.apk
 
-echo "=== Copying and Renaming APKs to Project Root ==="
-
 # Copy and rename arm64-v8a
-if [ -f "$APK_DIR/app-arm64-v8a-release.apk" ]; then
-  cp "$APK_DIR/app-arm64-v8a-release.apk" "$REPO_DIR/Anx_Remix-${VERSION}-arm64-v8a.apk"
+ARM64_APK=$(find "$APK_DIR" -name "*arm64-v8a*.apk" | head -n 1)
+if [ -n "$ARM64_APK" ]; then
+  cp "$ARM64_APK" "$REPO_DIR/Anx_Remix-${VERSION}-arm64-v8a.apk"
   echo "=== APK successfully created at: $REPO_DIR/Anx_Remix-${VERSION}-arm64-v8a.apk ==="
 fi
 
 # Copy and rename armeabi-v7a
-if [ -f "$APK_DIR/app-armeabi-v7a-release.apk" ]; then
-  cp "$APK_DIR/app-armeabi-v7a-release.apk" "$REPO_DIR/Anx_Remix-${VERSION}-armeabi-v7a.apk"
+ARMV7_APK=$(find "$APK_DIR" -name "*armeabi-v7a*.apk" | head -n 1)
+if [ -n "$ARMV7_APK" ]; then
+  cp "$ARMV7_APK" "$REPO_DIR/Anx_Remix-${VERSION}-armeabi-v7a.apk"
   echo "=== APK successfully created at: $REPO_DIR/Anx_Remix-${VERSION}-armeabi-v7a.apk ==="
 fi
 
 # Copy and rename x86_64
-if [ -f "$APK_DIR/app-x86_64-release.apk" ]; then
-  cp "$APK_DIR/app-x86_64-release.apk" "$REPO_DIR/Anx_Remix-${VERSION}-x86_64.apk"
+X86_64_APK=$(find "$APK_DIR" -name "*x86_64*.apk" | head -n 1)
+if [ -n "$X86_64_APK" ]; then
+  cp "$X86_64_APK" "$REPO_DIR/Anx_Remix-${VERSION}-x86_64.apk"
   echo "=== APK successfully created at: $REPO_DIR/Anx_Remix-${VERSION}-x86_64.apk ==="
 fi
 

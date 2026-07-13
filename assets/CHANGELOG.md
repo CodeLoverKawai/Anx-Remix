@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.15.0-remix+2
+- Feat(package): Make the application fully independent from original ANX Reader on Android, iOS, Linux, and Web (Package/Bundle ID changed to com.pitufus.anx_remix / com.pitufus.anxRemix)
+- Feat(build): Add robust build scripts to automatically compile and dynamically rename output APKs to the project root
+- Feat(git): Configure .gitignore to prevent tracking build outputs, sensitive configuration files, and large executables
+- Chore: Clean up temporary test files
+
+- Feat(package): Hacer la aplicación completamente independiente del ANX Reader original en Android, iOS, Linux y Web (ID de paquete cambiado a com.pitufus.anx_remix / com.pitufus.anxRemix)
+- Feat(build): Agregar scripts de compilación robustos para compilar automáticamente y renombrar dinámicamente los APKs en la raíz del proyecto
+- Feat(git): Configurar .gitignore para evitar el rastreo de resultados de compilación, archivos de configuración sensibles y ejecutables grandes
+- Chore: Limpiar archivos de prueba temporales
+
 ## 1.15.0
 - Feat(network): Add global HTTP proxy support in advanced settings (#838) Thanks @dddXzz
 - Feat(network): Add HTTP proxy connectivity test feature (#838) Thanks @dddXzz
