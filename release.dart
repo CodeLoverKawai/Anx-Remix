@@ -202,7 +202,7 @@ void main() async {
     await _runCommand('git', ['push']);
     print('✅ git push');
 
-    if (releaseType == 'stable') {
+    if (releaseType == 'stable' && currentBranch == 'develop') {
       // For stable releases, merge to main, tag, then back to develop
       print('\nMerging to main branch for stable release...');
       await _runCommand('git', ['checkout', 'main']);
@@ -226,7 +226,7 @@ void main() async {
 
       print('\n🎉 Stable release $tag completed successfully!');
     } else {
-      // For beta/alpha, just tag on develop
+      // For beta/alpha, or stable on non-develop branch, just tag and push
       await _runCommand('git', ['tag', tag]);
       print('✅ git tag $tag');
 
