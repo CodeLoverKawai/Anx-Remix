@@ -33,7 +33,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "de": [
@@ -70,7 +75,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "es": [
@@ -130,7 +140,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "it": [
@@ -167,7 +182,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "ja": [
@@ -204,7 +224,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "ko": [
@@ -241,7 +266,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "pt": [
@@ -278,7 +308,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "ro": [
@@ -315,7 +350,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "ru": [
@@ -352,7 +392,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "tr": [
@@ -389,7 +434,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "zh": [
@@ -412,7 +462,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "zh_CN": [
@@ -429,7 +484,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "zh_LZH": [
@@ -466,7 +526,12 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ],
 
   "zh_TW": [
@@ -503,6 +568,11 @@
     "dictionaryLookupLoading",
     "dictionaryLookupNotFound",
     "dictionaryLookupError",
-    "readIncognito"
+    "readIncognito",
+    "settingsSyncUploadConfirm",
+    "settingsSyncDownloadConfirm",
+    "settingsExportChoiceTitle",
+    "settingsExportChoiceOnlyConfig",
+    "settingsExportChoiceEverything"
   ]
 }

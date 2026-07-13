@@ -918,5 +918,10 @@
   "dictionaryLookupLoading": "Looking up definition...",
   "dictionaryLookupNotFound": "No definition found for '{word}'.",
   "dictionaryLookupError": "Error looking up word definition.",
-  "readIncognito": "Read in Incognito Mode"
+  "readIncognito": "Read in Incognito Mode",
+  "settingsSyncUploadConfirm": "Are you sure you want to upload? This will overwrite the database and settings on the remote server.",
+  "settingsSyncDownloadConfirm": "Are you sure you want to download? This will overwrite the local database and settings.",
+  "settingsExportChoiceTitle": "Export Backup",
+  "settingsExportChoiceOnlyConfig": "Database and Settings Only",
+  "settingsExportChoiceEverything": "Everything (includes book files)"
 }

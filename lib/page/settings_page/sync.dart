@@ -165,40 +165,85 @@ class _SyncSettingState extends ConsumerState<SyncSetting> {
     AnxLog.info('exportData: start');
     if (!mounted) return;
 
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Text(L10n.of(context).settingsExportChoiceTitle),
+          children: [
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context);
+                _performExport(context, onlyConfig: true);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Text(L10n.of(context).settingsExportChoiceOnlyConfig),
+              ),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context);
+                _performExport(context, onlyConfig: false);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Text(L10n.of(context).settingsExportChoiceEverything),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _performExport(BuildContext context, {required bool onlyConfig}) async {
+    AnxLog.info('_performExport: start (onlyConfig: $onlyConfig)');
+    if (!mounted) return;
+
     _showDataDialog(L10n.of(context).exporting);
 
-    final File prefsBackupFile = await _createPrefsBackupFile();
+    File? prefsBackupFile;
+    File? zipFile;
+    try {
+      prefsBackupFile = await _createPrefsBackupFile();
 
-    RootIsolateToken token = RootIsolateToken.instance!;
-    final zipPath = await compute(createZipFile, {
-      'token': token,
-      'prefsBackupFilePath': prefsBackupFile.path,
-    });
+      RootIsolateToken token = RootIsolateToken.instance!;
+      final zipPath = await compute(createZipFile, {
+        'token': token,
+        'prefsBackupFilePath': prefsBackupFile.path,
+        'onlyConfig': onlyConfig,
+      });
 
-    final file = File(zipPath);
-    SmartDialog.dismiss();
-    if (await file.exists()) {
-      // SaveFileDialogParams params = SaveFileDialogParams(
-      //   sourceFilePath: file.path,
-      //   mimeTypesFilter: ['application/zip'],
-      // );
-      // final filePath = await FlutterFileDialog.saveFile(params: params);
-      String fileName =
-          'AnxReader-Backup-${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}-v3.zip';
+      zipFile = File(zipPath);
+      if (await zipFile.exists()) {
+        String suffix = onlyConfig ? 'config' : 'full';
+        String fileName =
+            'AnxReader-Backup-${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}-$suffix-v3.zip';
 
-      String? filePath = await saveFileToDownload(
-          sourceFilePath: file.path,
-          fileName: fileName,
-          mimeType: 'application/zip');
+        String? filePath = await saveFileToDownload(
+            sourceFilePath: zipFile.path,
+            fileName: fileName,
+            mimeType: 'application/zip');
 
-      await file.delete();
-
-      if (filePath != null) {
-        AnxLog.info('exportData: Saved to: $filePath');
-        AnxToast.show(L10n.of(navigatorKey.currentContext!).exportTo(filePath));
-      } else {
-        AnxLog.info('exportData: Cancelled');
-        AnxToast.show(L10n.of(navigatorKey.currentContext!).commonCanceled);
+        if (filePath != null) {
+          AnxLog.info('_performExport: Saved to: $filePath');
+          AnxToast.show(L10n.of(navigatorKey.currentContext!).exportTo(filePath));
+        } else {
+          AnxLog.info('_performExport: Cancelled');
+          AnxToast.show(L10n.of(navigatorKey.currentContext!).commonCanceled);
+        }
+      }
+    } catch (e) {
+      AnxLog.severe('_performExport: error: $e');
+      AnxToast.show('${L10n.of(navigatorKey.currentContext!).commonFailed}: $e');
+    } finally {
+      SmartDialog.dismiss();
+      if (prefsBackupFile != null && await prefsBackupFile.exists()) {
+        await prefsBackupFile.delete();
+      }
+      if (zipFile != null && await zipFile.exists()) {
+        await zipFile.delete();
       }
     }
   }
@@ -302,27 +347,46 @@ Future<String> createZipFile(Map<String, dynamic> params) async {
   RootIsolateToken token = params['token'];
   final String prefsBackupFilePath = params['prefsBackupFilePath'];
   final File prefsBackupFile = File(prefsBackupFilePath);
+  final bool onlyConfig = params['onlyConfig'] ?? false;
   BackgroundIsolateBinaryMessenger.ensureInitialized(token);
   final date =
       '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}';
   final zipPath = '${(await getAnxTempDir()).path}/AnxReader-Backup-$date.zip';
   final docPath = await getAnxDocumentsPath();
-  final directoryList = [
-    getFileDir(path: docPath),
-    getCoverDir(path: docPath),
-    getFontDir(path: docPath),
-    getBgimgDir(path: docPath),
-    if (!AnxPlatform.isOhos) await getAnxDataBasesDir(),
-    // await getAnxSharedPrefsDir(),
-    // await getAnxShredPrefsFile(),
-    prefsBackupFile,
-  ];
+
+  final List<dynamic> directoryList = [];
+
+  // Add configuration/preference backup file if it exists
+  if (prefsBackupFile.existsSync()) {
+    directoryList.add(prefsBackupFile);
+  }
+
+  // If not onlyConfig, add media and other directories if they exist
+  if (!onlyConfig) {
+    final fileDir = getFileDir(path: docPath);
+    if (fileDir.existsSync()) {
+      directoryList.add(fileDir);
+    }
+    final coverDir = getCoverDir(path: docPath);
+    if (coverDir.existsSync()) {
+      directoryList.add(coverDir);
+    }
+    final fontDir = getFontDir(path: docPath);
+    if (fontDir.existsSync()) {
+      directoryList.add(fontDir);
+    }
+    final bgimgDir = getBgimgDir(path: docPath);
+    if (bgimgDir.existsSync()) {
+      directoryList.add(bgimgDir);
+    }
+  }
 
   AnxLog.info('exportData: directoryList: $directoryList');
 
   final encoder = ZipFileEncoder();
   encoder.create(zipPath);
 
+  // Add Database (always included in both modes)
   if (AnxPlatform.isOhos) {
     final dbDir = await getAnxDataBasesDir();
     final dbFile = File('${dbDir.path}/app_database.db');
@@ -331,14 +395,20 @@ Future<String> createZipFile(Map<String, dynamic> params) async {
     }
   } else {
     final dbDir = await getAnxDataBasesDir();
-    await encoder.addDirectory(dbDir);
+    if (dbDir.existsSync()) {
+      await encoder.addDirectory(dbDir);
+    }
   }
 
   for (final dir in directoryList) {
     if (dir is Directory) {
-      await encoder.addDirectory(dir);
+      if (dir.existsSync()) {
+        await encoder.addDirectory(dir);
+      }
     } else if (dir is File) {
-      await encoder.addFile(dir);
+      if (dir.existsSync()) {
+        await encoder.addFile(dir);
+      }
     }
   }
   encoder.close();
